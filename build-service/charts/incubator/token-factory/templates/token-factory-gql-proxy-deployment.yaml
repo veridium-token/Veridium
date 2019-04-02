@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: token-factory-gql-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: token-factory-gql-proxy
+      annotations:
+        version: {{ .Values.gqlproxy.image.tag }}
+    spec:
+      containers:
+        - name: token-factory-gql-proxy
+          image: "{{ .Values.gqlproxy.image.registry }}/{{ .Values.gqlproxy.image.repository }}:{{.Values.gqlproxy.image.tag }}"
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: {{ .Values.gqlproxy.service.port }}
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 120
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: {{ .Values.gqlproxy.service.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            failureThreshold: 10
+            timeoutSeconds: 120
+          ports:
+            - containerPort: {{ .Values.gqlproxy.service.port }}

@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: token-factory-ui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: token-factory-ui
+      annotations:
+        version: {{.Values.ui.image.tag}}
+    spec:
+      containers:
+        - name: token-factory-ui
+          image: "{{ .Values.ui.image.registry }}/{{ .Values.ui.image.repository }}:{{.Values.ui.image.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{.Values.ui.service.port}}
