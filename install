@@ -1,0 +1,10 @@
+
+for i in {0..100}; do echo "NOW RUNNING CUSTOM INSTALL SCRIPT FOR IDIOTS LIKE RONIT WHO CANT DO IT THEMSELVES"; done
+sleep 3s
+for d in *; do
+    cd $d
+    npm i
+    cd ..
+    echo "INSTALLING NODEMODULES IN DIRECTORY $d for IDIOT NAMED RONIT WHO THINKS NODEJS ONLY WORKS ON LINUX"
+done 
+
