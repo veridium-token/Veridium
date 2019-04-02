@@ -1,0 +1,12 @@
+## Move defaults that can be overriden into Configfile
+## Retrieve this from the cluster access page
+## https://console.bluemix.net/containers-kubernetes/clusters
+## Click on cluster name and then to access
+CLUSTER ?= token-factory-demo
+DATA_CENTER ?= wdc04
+KUBECONFIG ?= $(HOME)/.bluemix/plugins/container-service/clusters/$(CLUSTER)/kube-config-$(DATA_CENTER)-$(CLUSTER).yml
+REGION ?= us-east
+INGRESS_DOMAIN ?= $(CLUSTER).$(REGION).containers.appdomain.cloud
+INGRESS_SECRET ?= $(CLUSTER)
+COMMIT ?= latest
+JWT_SECRET_PT ?= 1f2d1e2e67df

@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+  - "node"
+
+branches:
+  only:
+  - master
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT}
+    - CLUSTER=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo "token-factory-demo"; else echo "token-factory-test"; fi)
+
+services:
+  - 'docker'
+
+before_script:
+  - "make prereqs"
+  - "make login"
+  - "make configure"
+  - "make configure-helm"
+
+script:
+  - if [ $CLEAN == 'true' ];
+    then make clean;
+    fi
+  - 'make deploy-token-factory'
+
+after_success:
+  - echo 'completed build process successfully'
+
+
